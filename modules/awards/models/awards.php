@@ -9,7 +9,7 @@ class Awards extends Model
 {
 	public function all($public = FALSE, $team_id = 0)
 	{
-		$this->db->select('a.*', 't.title AS team_title', 'tr.title AS tournament_title')->from('gamification_awards a')->join('gamification_teams t', 't.team_id = a.team_id', 'LEFT')->join('gamification_tournaments tr', 'tr.tournament_id = a.tournament_id', 'LEFT')->order_by('a.awarded_at', 'DESC');
+		$this->db->select('a.*', 't.title AS team_title', 'tr.title AS tournament_title')->from('gamification_awards a')->join('gamification_teams t', 't.team_id = a.team_id', 'LEFT')->join('gamification_tournaments tr', 'tr.tournament_id = a.tournament_id', 'LEFT')->order_by('a.awarded_at DESC');
 		if ($public) { $this->db->where('a.published', 1); } if ($team_id) { $this->db->where('a.team_id', (int)$team_id); }
 		return $this->db->get();
 	}

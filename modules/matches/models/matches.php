@@ -10,7 +10,7 @@ class Matches extends Model
 	public static function statuses() { return ['scheduled' => 'Scheduled', 'live' => 'Live', 'completed' => 'Completed', 'cancelled' => 'Cancelled']; }
 	public function all($public = FALSE, $mode = 'all', $team_id = 0)
 	{
-		$this->db->select('m.*', 'ht.title AS home_team_title', 'at.title AS away_team_title', 't.title AS tournament_title')->from('gamification_matches m')->join('gamification_teams ht', 'ht.team_id = m.home_team_id', 'LEFT')->join('gamification_teams at', 'at.team_id = m.away_team_id', 'LEFT')->join('gamification_tournaments t', 't.tournament_id = m.tournament_id', 'LEFT')->order_by('m.starts_at', $mode === 'results' ? 'DESC' : 'ASC');
+		$this->db->select('m.*', 'ht.title AS home_team_title', 'at.title AS away_team_title', 't.title AS tournament_title')->from('gamification_matches m')->join('gamification_teams ht', 'ht.team_id = m.home_team_id', 'LEFT')->join('gamification_teams at', 'at.team_id = m.away_team_id', 'LEFT')->join('gamification_tournaments t', 't.tournament_id = m.tournament_id', 'LEFT')->order_by('m.starts_at '.($mode === 'results' ? 'DESC' : 'ASC'));
 		if ($public) { $this->db->where('m.published', 1); }
 		if ($mode === 'upcoming') { $this->db->where('m.status !=', 'completed')->where('m.status !=', 'cancelled'); }
 		if ($mode === 'results') { $this->db->where('m.status', 'completed'); }

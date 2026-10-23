@@ -12,7 +12,7 @@ class Tournaments extends Model
 
 	public function all($public = FALSE)
 	{
-		$this->db->select('t.*', 'COUNT(p.participant_id) AS participant_count')->from('gamification_tournaments t')->join('gamification_tournament_participants p', 'p.tournament_id = t.tournament_id', 'LEFT')->group_by('t.tournament_id')->order_by('t.starts_at', 'DESC');
+		$this->db->select('t.*', 'COUNT(p.participant_id) AS participant_count')->from('gamification_tournaments t')->join('gamification_tournament_participants p', 'p.tournament_id = t.tournament_id', 'LEFT')->group_by('t.tournament_id')->order_by('t.starts_at DESC');
 		if ($public) { $this->db->where('t.published', 1); }
 		return $this->db->get();
 	}
