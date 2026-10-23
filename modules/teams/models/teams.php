@@ -9,13 +9,13 @@ class Teams extends Model
 {
 	public function all($public = FALSE)
 	{
-		$this->db->select('t.*', 'COUNT(m.member_id) AS member_count')->from('gamification_teams t')
-			->join('gamification_team_members m', 'm.team_id = t.team_id', 'LEFT')->group_by('t.team_id')->order_by('t.title');
+		$this->db->select('t.*', 'logo.path AS logo_path', 'banner.path AS banner_path', '(SELECT COUNT(*) FROM gamification_team_members members WHERE members.team_id = t.team_id) AS member_count')->from('gamification_teams t')
+			->join('file logo', 'logo.id = t.logo_id', 'LEFT')->join('file banner', 'banner.id = t.banner_id', 'LEFT')->order_by('t.title');
 		if ($public) { $this->db->where('t.published', 1); }
 		return $this->db->get();
 	}
 
-	public function get($id) { return $this->db->from('gamification_teams')->where('team_id', (int)$id)->row(); }
+	public function get($id) { return $this->db->select('t.*', 'logo.path AS logo_path', 'banner.path AS banner_path')->from('gamification_teams t')->join('file logo', 'logo.id = t.logo_id', 'LEFT')->join('file banner', 'banner.id = t.banner_id', 'LEFT')->where('t.team_id', (int)$id)->row(); }
 	public function member($id) { return $this->db->from('gamification_team_members')->where('member_id', (int)$id)->row(); }
 
 	public function members($team_id, $public = FALSE)
@@ -38,9 +38,10 @@ class Teams extends Model
 		if ($title === '') { throw new InvalidArgumentException((string)$this->lang('The team name is required.')); }
 		$color = trim($data['color'] ?? '#126b58');
 		if (!preg_match('/^#[a-f0-9]{6}$/i', $color)) { throw new InvalidArgumentException((string)$this->lang('Invalid hexadecimal color.')); }
+		$logo_id = $this->image_id($data['logo_id'] ?? 0); $banner_id = $this->image_id($data['banner_id'] ?? 0);
 		$now = date('Y-m-d H:i:s'); $slug = url_title($title);
 		if (($existing = $this->db->from('gamification_teams')->where('slug', $slug)->row()) && (int)$existing['team_id'] !== (int)$id) { throw new InvalidArgumentException((string)$this->lang('A team already uses this name.')); }
-		$values = ['slug' => $slug, 'title' => $title, 'description' => utf8_html_entity_decode($data['description'] ?? '', ENT_QUOTES), 'color' => $color, 'published' => !empty($data['published']) ? 1 : 0, 'updated_at' => $now];
+		$values = ['slug' => $slug, 'title' => $title, 'description' => utf8_html_entity_decode($data['description'] ?? '', ENT_QUOTES), 'logo_id' => $logo_id, 'banner_id' => $banner_id, 'color' => $color, 'published' => !empty($data['published']) ? 1 : 0, 'updated_at' => $now];
 		if ($id) { $this->db->where('team_id', (int)$id)->update('gamification_teams', $values); return $id; }
 		$values['created_at'] = $now;
 		return $this->db->insert('gamification_teams', $values);
@@ -59,4 +60,13 @@ class Teams extends Model
 
 	public function delete_team($id) { $this->db->where('team_id', (int)$id)->delete('gamification_teams'); }
 	public function delete_member($id) { $this->db->where('member_id', (int)$id)->delete('gamification_team_members'); }
+
+	private function image_id($id)
+	{
+		$id = (int)$id;
+		if (!$id) { return NULL; }
+		$file = $this->db->select('id', 'path')->from('file')->where('id', $id)->row();
+		if (!$file || !in_array(strtolower(pathinfo($file['path'], PATHINFO_EXTENSION)), ['avif', 'gif', 'jpeg', 'jpg', 'png', 'svg', 'webp'], TRUE)) { throw new InvalidArgumentException((string)$this->lang('Choose an image from the media library.')); }
+		return $id;
+	}
 }

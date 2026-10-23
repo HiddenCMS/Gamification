@@ -28,4 +28,4 @@ Install the package through Composer, then run the regular HiddenCMS addon synch
 
 ## Release status
 
-The initial public release is `0.0.1`. WARDOGS integration remains intentionally out of scope for this version.
+The current public release is `0.0.2`. WARDOGS integration remains intentionally out of scope for this version.

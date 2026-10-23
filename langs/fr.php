@@ -32,5 +32,9 @@ return [
 	'3918c62e' => 'Ligue', '7a997c5f' => 'Inscriptions', 'e09cb0f3' => 'En cours', 'b809decd' => 'Terminé',
 	'7b047964' => 'Annulé', '3019dbea' => 'Planifié', 'f33d8391' => 'En direct',
 	'76b35a06' => 'Une équipe utilise déjà ce nom.', '018186e1' => 'Un tournoi utilise déjà ce nom.',
-	'30340b5e' => 'Date et heure invalides.', '8590d8b5' => 'URL de direct invalide.'
+	'30340b5e' => 'Date et heure invalides.', '8590d8b5' => 'URL de direct invalide.',
+	'6831bdd1' => 'Bannière', '88dfbb94' => 'Choisissez une image dans la médiathèque.',
+	'caaccee8' => 'Créez votre première équipe pour commencer à composer son effectif.',
+	'031bfc11' => 'Aucune image sélectionnée', '889be845' => 'Aucune équipe pour le moment',
+	'cc1c9bd5' => 'Logo de l’équipe', '8bcc26a1' => 'Équipe enregistrée'
 ];
