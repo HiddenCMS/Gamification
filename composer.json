@@ -1,0 +1,48 @@
+{
+  "name": "hiddencms/gamification",
+  "description": "Teams, matches, awards and tournaments for HiddenCMS",
+  "type": "hiddencms-addon",
+  "license": "GPL-3.0-only",
+  "require": {
+    "php": ">=8.1",
+    "hiddencms/core": "^0.9 || ^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "HB\\Modules\\Teams\\": "modules/teams/",
+      "HB\\Modules\\Matches\\": "modules/matches/",
+      "HB\\Modules\\Awards\\": "modules/awards/",
+      "HB\\Modules\\Tournaments\\": "modules/tournaments/",
+      "HB\\Widgets\\Teams\\": "widgets/teams/",
+      "HB\\Widgets\\Matches\\": "widgets/matches/",
+      "HB\\Widgets\\Awards\\": "widgets/awards/",
+      "HB\\Widgets\\Tournaments\\": "widgets/tournaments/",
+      "HiddenCMS\\Gamification\\": "src/"
+    },
+    "classmap": [
+      "modules/teams/teams.php",
+      "modules/matches/matches.php",
+      "modules/awards/awards.php",
+      "modules/tournaments/tournaments.php",
+      "widgets/teams/teams.php",
+      "widgets/matches/matches.php",
+      "widgets/awards/awards.php",
+      "widgets/tournaments/tournaments.php"
+    ]
+  },
+  "extra": {
+    "hiddencms": {
+      "addons": [
+        {"type": "module", "name": "teams", "class": "HB\\Modules\\Teams\\Teams", "path": "modules/teams"},
+        {"type": "module", "name": "matches", "class": "HB\\Modules\\Matches\\Matches", "path": "modules/matches"},
+        {"type": "module", "name": "awards", "class": "HB\\Modules\\Awards\\Awards", "path": "modules/awards"},
+        {"type": "module", "name": "tournaments", "class": "HB\\Modules\\Tournaments\\Tournaments", "path": "modules/tournaments"},
+        {"type": "widget", "name": "teams", "class": "HB\\Widgets\\Teams\\Teams", "path": "widgets/teams"},
+        {"type": "widget", "name": "matches", "class": "HB\\Widgets\\Matches\\Matches", "path": "widgets/matches"},
+        {"type": "widget", "name": "awards", "class": "HB\\Widgets\\Awards\\Awards", "path": "widgets/awards"},
+        {"type": "widget", "name": "tournaments", "class": "HB\\Widgets\\Tournaments\\Tournaments", "path": "widgets/tournaments"}
+      ],
+      "migrations": ["HiddenCMS\\Gamification\\Migrations\\CreateGamificationTables"]
+    }
+  }
+}
