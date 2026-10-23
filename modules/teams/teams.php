@@ -14,7 +14,7 @@ class Teams extends Module
 			'icon' => 'fas fa-users',
 			'author' => 'HiddenCMS',
 			'license' => 'GPLv3',
-			'version' => '0.1.0',
+			'version' => '0.0.1',
 			'admin' => 'gaming',
 			'front' => TRUE,
 			'reserved_route' => 'teams',

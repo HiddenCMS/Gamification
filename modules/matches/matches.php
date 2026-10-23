@@ -14,7 +14,7 @@ class Matches extends Module
 			'icon' => 'fas fa-crosshairs',
 			'author' => 'HiddenCMS',
 			'license' => 'GPLv3',
-			'version' => '0.1.0',
+			'version' => '0.0.1',
 			'admin' => 'gaming',
 			'front' => TRUE,
 			'reserved_route' => 'matches',

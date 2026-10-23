@@ -26,6 +26,6 @@ Install the package through Composer, then run the regular HiddenCMS addon synch
 - PHP 8.1 or newer
 - HiddenCMS Core 0.9 or 1.x
 
-## Development status
+## Release status
 
-The package is under active development and is not yet tagged as a stable release.
+The initial public release is `0.0.1`. WARDOGS integration remains intentionally out of scope for this version.
